@@ -1,11 +1,15 @@
 package com.epam.training.ticketservice.ui.command;
 
+import com.epam.training.ticketservice.core.user.User;
+import com.epam.training.ticketservice.core.user.UserDTO;
 import com.epam.training.ticketservice.core.user.UserService;
-import exceptions.NoAuthorizationException;
-import exceptions.UnauthorizedMethodException;
 import lombok.AllArgsConstructor;
+import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
+
+import java.util.Optional;
 
 @ShellComponent
 @AllArgsConstructor
@@ -23,11 +27,11 @@ public class UserCommand {
         }
     }
 
-    @ShellMethod(key = "login", value = "Login as user")
+    @ShellMethod(key = {"sign in privileged", "login"}, value = "Login as user")
     public String login(String username, String password) {
         return userService.login(username, password)
             .map(userDTO -> "Successful login. Welcome " + userDTO.username() + "!")
-            .orElse("Authentication failed");
+            .orElse("Login failed due to incorrect credentials");
     }
 
     @ShellMethod(key = "logout", value = "Logout current user")
@@ -37,23 +41,30 @@ public class UserCommand {
             .orElse("You need to login first");
     }
 
-    @ShellMethod(key = {"userinfo", "whoami"}, value = "Get current logged in user info")
+    @ShellMethod(key = {"userinfo", "whoami", "describe account"}, value = "Get current logged in user info")
     public String userInfo() {
         return userService.describe()
-            .map(userDTO -> "Username: " + userDTO.username() + "\nRole: " + userDTO.role())
+            .map(userDTO -> userDTO.role() == User.Role.ADMIN ? "Signed in with privileged account '" + userDTO.username() + "'" : "Signed in with account '" + userDTO.username() + "'")
             .orElse("You are not logged in");
     }
 
-    @ShellMethod(key = "lu", value = "List users")
+    @ShellMethodAvailability("isAvailable")
+    @ShellMethod(key = "list users", value = "List users")
     public String listUsers() {
         try {
             return userService.getUsers().toString();
-        } catch (NoAuthorizationException e) {
-            return "You are not logged in";
-        } catch (UnauthorizedMethodException e) {
-            return "Permission denied";
         } catch (Exception e) {
             return "Failed to list users";
         }
+    }
+
+    @ShellMethod(key = "exit", value = "Exits application")
+    public void exit() {
+        System.exit(0);
+    }
+
+    private Availability isAvailable() {
+        Optional<UserDTO> user = userService.describe();
+        return user.map(userDTO -> userDTO.role() == User.Role.ADMIN ? Availability.available() : Availability.unavailable("Permission denied")).orElseGet(() -> Availability.unavailable("You are not logged in"));
     }
 }

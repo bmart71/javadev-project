@@ -53,4 +53,12 @@ public class UserServiceImpl implements UserService {
         }
         return (List<User>) userRepository.findAll();
     }
+
+    @Override
+    public boolean isAdmin() {
+        if (currentUser == null) {
+            return false;
+        }
+        return currentUser.role() == User.Role.ADMIN;
+    }
 }

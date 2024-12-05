@@ -9,4 +9,6 @@ public interface UserService {
     Optional<UserDTO> describe();
     void register(String username, String password);
     List<User> getUsers() throws IllegalAccessException;
+    boolean isAdmin();
+    String toString();
 }

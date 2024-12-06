@@ -1,9 +1,6 @@
 package com.epam.training.ticketservice.core.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -30,6 +27,14 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = Role.USER;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public enum Role{

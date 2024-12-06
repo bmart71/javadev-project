@@ -25,7 +25,7 @@ public class MovieCommand {
     @ShellMethod(key = "create movie", value = "Create movies")
     public String createMovie(String name, String genre, int length) {
         try {
-            movieService.saveMovie(name, genre, length);
+            movieService.saveMovie(new Movie(name, genre, length));
             return "Movie created";
         } catch (Exception e) {
             return "Failed to create movie";
@@ -36,25 +36,23 @@ public class MovieCommand {
     public String listMovies() {
         try {
             List<Movie> movies = movieService.getAllMovies();
-            if (movies.isEmpty()) {
+            if (movies.isEmpty())
                 return "There are no movies at the moment";
-            }
             StringBuilder builder = new StringBuilder();
-            for (Movie movie : movies) {
-                builder.append(movie.getTitle()).append(" (").append(movie.getGenre()).append(", ").append(movie.getLength()).append(" minutes)\n");
-            }
-            return builder.toString();
+            for (Movie movie : movies)
+                builder.append(movie).append("\n");
+            return builder.substring(0, builder.length() - 1);
         } catch (Exception e) {
             return "Failed to list movies";
         }
     }
 
     @ShellMethodAvailability("isAvailable")
-    @ShellMethod(key = "update movie", value = "Lists available movies")
+    @ShellMethod(key = "update movie", value = "Update movie")
     public String updateMovie(String title, String genre, int length) {
         try {
-            movieService.updateMovie(title, genre, length);
-            return "Movie updated";
+            movieService.updateMovie(new Movie(title, genre, length));
+            return "Movie titled: " + title + " updated";
         } catch (Exception e) {
             return "Failed to update movie";
         }
@@ -62,10 +60,10 @@ public class MovieCommand {
 
     @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "delete movie", value = "Delete movie by name")
-    public String deleteMovie(String name){
+    public String deleteMovie(String title){
         try {
-            movieService.deleteMovie(name);
-            return "Movie " + name + " deleted";
+            movieService.deleteMovie(title);
+            return "Movie titled: " + title + " deleted";
         } catch (Exception e) {
             return "Failed to delete movie";
         }

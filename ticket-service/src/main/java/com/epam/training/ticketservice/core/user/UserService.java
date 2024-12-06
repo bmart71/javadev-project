@@ -7,8 +7,7 @@ public interface UserService {
     Optional<UserDTO> login(String username, String password);
     Optional<UserDTO> logout();
     Optional<UserDTO> describe();
-    void register(String username, String password);
-    List<User> getUsers() throws IllegalAccessException;
-    boolean isAdmin();
+    void register(User user);
+    List<User> getUsers();
     String toString();
 }

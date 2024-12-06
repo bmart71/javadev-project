@@ -1,6 +1,5 @@
 package com.epam.training.ticketservice.core.movie;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,16 +8,12 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "Movies")
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Table(name = "Movies")
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
     @Column(unique=true)
     private String title;
 
@@ -30,6 +25,18 @@ public class Movie {
         this.title = title;
         this.genre = genre;
         this.length = length;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public int getLength() {
+        return length;
     }
 
     @Override

@@ -1,32 +1,32 @@
 package com.epam.training.ticketservice.core.movie;
 
-import com.epam.training.ticketservice.core.user.UserService;
-import exceptions.UnauthorizedMethodException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
 
+    public MovieServiceImpl(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
+
     @Override
-    public void saveMovie(String name, String genre, int length) {
-        Movie movie = new Movie(name, genre, length);
+    public void saveMovie(Movie movie) {
         movieRepository.save(movie);
     }
 
     @Override
-    public void updateMovie(String name, String genre, int length) {
-        movieRepository.findByTitle(name).ifPresent(movie -> {
-            movie.setTitle(name);
-            movie.setGenre(genre);
-            movie.setLength(length);
-            movieRepository.save(movie);
-        });
+    public List<Movie> getAllMovies() {
+        return movieRepository.findAll();
+    }
+
+    @Override
+    public void updateMovie(Movie movie) {
+        movieRepository.save(movie);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getAllMovies() {
-        return (List<Movie>) movieRepository.findAll();
+    public Optional<Movie> getMovieByTitle(String title) {
+        return movieRepository.findByTitle(title);
     }
 }

@@ -2,13 +2,11 @@ package com.epam.training.ticketservice.core.movie;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-@NoArgsConstructor
 @Builder
 @Table(name = "Movies")
 public class Movie {
@@ -20,6 +18,8 @@ public class Movie {
     private String genre;
 
     private int length;
+
+    public Movie() {}
 
     public Movie(String title, String genre, int length) {
         this.title = title;

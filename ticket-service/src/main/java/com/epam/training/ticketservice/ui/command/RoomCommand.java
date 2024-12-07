@@ -40,7 +40,7 @@ public class RoomCommand {
     public String listRooms() {
         List<Room> rooms = roomService.getAllRooms();
         if (rooms.isEmpty())
-            return "No rooms found";
+            return "There are no rooms at the moment";
         StringBuilder builder = new StringBuilder();
         for (Room room : rooms)
             builder.append(room.toString()).append("\n");

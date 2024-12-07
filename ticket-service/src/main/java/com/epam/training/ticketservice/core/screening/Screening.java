@@ -5,14 +5,12 @@ import com.epam.training.ticketservice.core.room.Room;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name = "Screenings")
@@ -37,6 +35,8 @@ public class Screening {
         this.room = room;
         this.date = date;
     }
+
+    public Screening() {}
 
     public Long getId() {
         return id;

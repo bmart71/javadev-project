@@ -49,7 +49,7 @@ class MovieServiceTest {
         when(movieRepository.findByTitle(sample.getTitle())).thenReturn(Optional.of(sample));
         Optional<Movie> expected = Optional.of(sample);
         //When
-        Optional<Movie> actual = movieRepository.findByTitle(sample.getTitle());
+        Optional<Movie> actual = underTest.getMovieByTitle(sample.getTitle());
         //Then
         assertEquals(expected, actual);
         verify(movieRepository).findByTitle(sample.getTitle());

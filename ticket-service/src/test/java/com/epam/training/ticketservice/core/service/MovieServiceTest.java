@@ -1,4 +1,4 @@
-package com.epam.training.ticketservice.core;
+package com.epam.training.ticketservice.core.service;
 
 import com.epam.training.ticketservice.core.movie.*;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-class MovieTest {
+class MovieServiceTest {
     private final MovieRepository movieRepository = mock(MovieRepository.class);
     private final MovieService underTest = new MovieServiceImpl(movieRepository);
 

@@ -38,6 +38,10 @@ public class Screening {
         this.date = date;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Movie getMovie() {
         return movie;
     }
@@ -52,6 +56,6 @@ public class Screening {
 
     @Override
     public String toString() {
-        return movie.getTitle() + " (" + movie.getGenre() + ", " + movie.getLength() + " minutes), screened in room " + room.getName() + ", at " + date.toString().replace("T", " ");
+        return movie.toString() + ", screened in room " + room.getName() + ", at " + date.toString().replace("T", " ");
     }
 }

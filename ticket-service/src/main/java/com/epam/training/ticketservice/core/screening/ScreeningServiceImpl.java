@@ -3,17 +3,19 @@ package com.epam.training.ticketservice.core.screening;
 import com.epam.training.ticketservice.core.exceptions.ScreeningServiceException;
 import com.epam.training.ticketservice.core.movie.Movie;
 import com.epam.training.ticketservice.core.room.Room;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class ScreeningServiceImpl implements ScreeningService {
 
-    private ScreeningRepository screeningRepository;
+    private final ScreeningRepository screeningRepository;
+
+    public ScreeningServiceImpl(ScreeningRepository screeningRepository) {
+        this.screeningRepository = screeningRepository;
+    }
 
     @Override
     public void createScreening(Screening screening) throws ScreeningServiceException {

@@ -1,4 +1,4 @@
-package com.epam.training.ticketservice.core;
+package com.epam.training.ticketservice.core.service;
 
 import com.epam.training.ticketservice.core.user.*;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-class UserTest {
+class UserServiceTest {
     private final UserRepository userRepository = mock(UserRepository.class);
     private final UserService underTest = new UserServiceImpl(userRepository);
 

@@ -2,6 +2,7 @@ package com.epam.training.ticketservice.core.user;
 
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,5 +46,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    @PostConstruct
+    private void postConstruct() {
+        User admin = new User("admin", "admin", User.Role.ADMIN);
+        userRepository.save(admin);
     }
 }

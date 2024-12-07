@@ -5,7 +5,6 @@ import com.epam.training.ticketservice.core.movie.MovieService;
 import com.epam.training.ticketservice.core.user.User;
 import com.epam.training.ticketservice.core.user.UserDTO;
 import com.epam.training.ticketservice.core.user.UserService;
-import lombok.AllArgsConstructor;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -14,12 +13,16 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
 @ShellComponent
 public class MovieCommand {
 
-    private UserService userService;
-    private MovieService movieService;
+    private final UserService userService;
+    private final MovieService movieService;
+
+    public MovieCommand(UserService userService, MovieService movieService) {
+        this.userService = userService;
+        this.movieService = movieService;
+    }
 
     @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "create movie", value = "Create movies")

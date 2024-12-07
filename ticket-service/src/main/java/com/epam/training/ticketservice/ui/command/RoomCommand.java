@@ -5,7 +5,7 @@ import com.epam.training.ticketservice.core.room.RoomService;
 import com.epam.training.ticketservice.core.user.User;
 import com.epam.training.ticketservice.core.user.UserDTO;
 import com.epam.training.ticketservice.core.user.UserService;
-import lombok.AllArgsConstructor;
+
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -15,11 +15,15 @@ import java.util.List;
 import java.util.Optional;
 
 @ShellComponent
-@AllArgsConstructor
 public class RoomCommand {
 
-    private RoomService roomService;
-    private UserService userService;
+    private final RoomService roomService;
+    private final UserService userService;
+
+    public RoomCommand(RoomService roomService, UserService userService) {
+        this.roomService = roomService;
+        this.userService = userService;
+    }
 
     @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "create room", value = "Create a room")

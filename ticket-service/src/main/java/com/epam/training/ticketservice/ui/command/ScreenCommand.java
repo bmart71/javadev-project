@@ -20,13 +20,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
 @ShellComponent
 public class ScreenCommand {
-    private UserService userService;
-    private ScreeningService screeningService;
-    private MovieService movieService;
-    private RoomService roomService;
+
+    private final UserService userService;
+    private final ScreeningService screeningService;
+    private final MovieService movieService;
+    private final RoomService roomService;
+
+    public ScreenCommand(UserService userService, ScreeningService screeningService, MovieService movieService, RoomService roomService) {
+        this.userService = userService;
+        this.screeningService = screeningService;
+        this.movieService = movieService;
+        this.roomService = roomService;
+    }
 
     @ShellMethod(key = "create screening", value = "Create screening")
     @ShellMethodAvailability("isAvailable")
